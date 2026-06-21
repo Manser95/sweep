@@ -19,9 +19,11 @@ DMG="$ROOT/dist/Sweep-${VERSION}.dmg"
 # --- Resolve the signing identity ------------------------------------------
 SIGN_ID="${SWEEP_SIGN_IDENTITY:-}"
 if [ -z "$SIGN_ID" ]; then
+    # `|| true`: grep exits non-zero when no Developer ID exists, which would
+    # otherwise abort the script under `set -euo pipefail`.
     SIGN_ID="$(security find-identity -v -p codesigning 2>/dev/null \
         | grep 'Developer ID Application' | head -1 \
-        | sed -E 's/^[^"]*"([^"]+)".*/\1/')"
+        | sed -E 's/^[^"]*"([^"]+)".*/\1/' || true)"
 fi
 if [ -z "$SIGN_ID" ]; then
     echo "error: no 'Developer ID Application' identity found. See SIGNING.md" >&2

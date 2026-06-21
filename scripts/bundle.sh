@@ -54,9 +54,11 @@ PLIST
 #     build cannot be notarized.
 SIGN_ID="${SWEEP_SIGN_IDENTITY:-}"
 if [ -z "$SIGN_ID" ]; then
+    # `|| true`: grep exits non-zero when no Developer ID exists, which would
+    # otherwise abort the script under `set -euo pipefail`.
     SIGN_ID="$(security find-identity -v -p codesigning 2>/dev/null \
         | grep 'Developer ID Application' | head -1 \
-        | sed -E 's/^[^"]*"([^"]+)".*/\1/')"
+        | sed -E 's/^[^"]*"([^"]+)".*/\1/' || true)"
 fi
 
 if [ -n "$SIGN_ID" ]; then
