@@ -4,3 +4,11 @@ dist/
 assets/Sweep.iconset/
 *.xcodeproj
 .DS_Store
+
+# Signing & notarization secrets — never commit these
+*.p8
+*.p12
+*.cer
+*.certSigningRequest
+.env
+.env.*
