@@ -1,0 +1,69 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="banner-bg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#16181d"/>
+      <stop offset="1" stop-color="#0c0d11"/>
+    </linearGradient>
+    <linearGradient id="i-bg" x1="160" y1="140" x2="880" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#46C8FF"/>
+      <stop offset="0.55" stop-color="#2E8BF5"/>
+      <stop offset="1" stop-color="#2256E6"/>
+    </linearGradient>
+    <radialGradient id="i-sheen" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.30"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="i-handle" x1="492" y1="250" x2="540" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DCE7FB"/>
+    </linearGradient>
+    <linearGradient id="i-brush" x1="510" y1="590" x2="510" y2="788" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFDD7A"/>
+      <stop offset="1" stop-color="#F2A93B"/>
+    </linearGradient>
+    <filter id="i-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#0A2E78" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="360" rx="28" fill="url(#banner-bg)"/>
+
+  <!-- Icon (scaled from 1024 grid) -->
+  <g transform="translate(96 60) scale(0.234)">
+    <rect x="112" y="112" width="800" height="800" rx="184" fill="url(#i-bg)"/>
+    <rect x="112" y="112" width="800" height="800" rx="184" fill="url(#i-sheen)"/>
+    <g transform="rotate(-20 512 512)" filter="url(#i-shadow)">
+      <rect x="491" y="250" width="42" height="322" rx="21" fill="url(#i-handle)"/>
+      <rect x="466" y="556" width="92" height="42" rx="15" fill="#E2E8F0"/>
+      <rect x="466" y="556" width="92" height="14" rx="7" fill="#C2CFE3"/>
+      <path d="M470 594 L554 594 L606 742 q9 26 -19 30 L445 786 q-30 4 -23 -24 Z" fill="url(#i-brush)"/>
+      <g stroke="#A56A12" stroke-opacity="0.40" stroke-width="9" stroke-linecap="round">
+        <line x1="492" y1="612" x2="455" y2="772"/>
+        <line x1="505" y1="612" x2="492" y2="778"/>
+        <line x1="518" y1="612" x2="528" y2="780"/>
+        <line x1="531" y1="612" x2="566" y2="772"/>
+      </g>
+      <path d="M447 770 q83 22 152 -2" stroke="#FFF0C2" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" fill="none"/>
+    </g>
+    <g fill="#FFFFFF">
+      <path d="M340 318 q14 56 70 70 q-56 14 -70 70 q-14 -56 -70 -70 q56 -14 70 -70 Z" opacity="0.96"/>
+      <path d="M662 372 q9 36 45 45 q-36 9 -45 45 q-9 -36 -45 -45 q36 -9 45 -45 Z" opacity="0.88"/>
+      <path d="M690 690 q6 24 30 30 q-24 6 -30 30 q-6 -24 -30 -30 q24 -6 30 -30 Z" opacity="0.8"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="392" y="172" fill="#ffffff" font-size="92" font-weight="800" letter-spacing="-1">Sweep</text>
+  <text x="396" y="222" fill="#aeb4c0" font-size="27" font-weight="500">A safe, transparent cleaner for macOS</text>
+
+  <!-- Tag chips -->
+  <g font-size="18" font-weight="600">
+    <rect x="396" y="252" width="150" height="34" rx="17" fill="#1f2630" stroke="#2c3744" stroke-width="1"/>
+    <text x="471" y="275" fill="#7fd1ff" text-anchor="middle">Allowlist-safe</text>
+    <rect x="558" y="252" width="132" height="34" rx="17" fill="#1f2630" stroke="#2c3744" stroke-width="1"/>
+    <text x="624" y="275" fill="#9be6a8" text-anchor="middle">No tracking</text>
+    <rect x="702" y="252" width="160" height="34" rx="17" fill="#1f2630" stroke="#2c3744" stroke-width="1"/>
+    <text x="782" y="275" fill="#d7c2ff" text-anchor="middle">Native SwiftUI</text>
+  </g>
+</svg>

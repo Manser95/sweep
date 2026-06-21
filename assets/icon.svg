@@ -1,0 +1,58 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="160" y1="140" x2="880" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#46C8FF"/>
+      <stop offset="0.55" stop-color="#2E8BF5"/>
+      <stop offset="1" stop-color="#2256E6"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.30"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="handle" x1="492" y1="250" x2="540" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DCE7FB"/>
+    </linearGradient>
+    <linearGradient id="brush" x1="510" y1="590" x2="510" y2="788" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFDD7A"/>
+      <stop offset="1" stop-color="#F2A93B"/>
+    </linearGradient>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#0A2E78" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle background -->
+  <rect x="112" y="112" width="800" height="800" rx="184" fill="url(#bg)"/>
+  <rect x="112" y="112" width="800" height="800" rx="184" fill="url(#sheen)"/>
+
+  <!-- Broom -->
+  <g transform="rotate(-20 512 512)" filter="url(#softShadow)">
+    <!-- handle -->
+    <rect x="491" y="250" width="42" height="322" rx="21" fill="url(#handle)"/>
+    <!-- binding collar -->
+    <rect x="466" y="556" width="92" height="42" rx="15" fill="#E2E8F0"/>
+    <rect x="466" y="556" width="92" height="14" rx="7" fill="#C2CFE3"/>
+
+    <!-- brush body (fan) -->
+    <path d="M470 594 L554 594 L606 742 q9 26 -19 30 L445 786 q-30 4 -23 -24 Z" fill="url(#brush)"/>
+
+    <!-- bristles -->
+    <g stroke="#A56A12" stroke-opacity="0.40" stroke-width="9" stroke-linecap="round">
+      <line x1="492" y1="612" x2="455" y2="772"/>
+      <line x1="505" y1="612" x2="492" y2="778"/>
+      <line x1="518" y1="612" x2="528" y2="780"/>
+      <line x1="531" y1="612" x2="566" y2="772"/>
+    </g>
+    <!-- swept tips highlight -->
+    <path d="M447 770 q83 22 152 -2" stroke="#FFF0C2" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#FFFFFF">
+    <path d="M340 318 q14 56 70 70 q-56 14 -70 70 q-14 -56 -70 -70 q56 -14 70 -70 Z" opacity="0.96"/>
+    <path d="M662 372 q9 36 45 45 q-36 9 -45 45 q-9 -36 -45 -45 q36 -9 45 -45 Z" opacity="0.88"/>
+    <path d="M690 690 q6 24 30 30 q-24 6 -30 30 q-6 -24 -30 -30 q24 -6 30 -30 Z" opacity="0.8"/>
+  </g>
+</svg>
