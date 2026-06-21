@@ -83,11 +83,11 @@ swift run Sweep --dryrun
 
 ## Установка
 
-### Вариант A — скачать сборку
+### Вариант A — скачать DMG
 
-Возьмите свежий `Sweep.app` со страницы
-[**Releases**](https://github.com/Manser95/sweep/releases), перенесите в
-`/Applications` и запустите.
+Скачайте свежий `Sweep-x.y.z.dmg` со страницы
+[**Releases**](https://github.com/Manser95/sweep/releases), откройте его и
+перетащите **Sweep** в **Applications**.
 
 > Приложение подписано ad-hoc (пока без нотаризации). При первом запуске:
 > правый клик по приложению → **Открыть**, чтобы обойти Gatekeeper, либо
@@ -108,6 +108,9 @@ swift run Sweep
 # Или собрать распространяемый .app в dist/
 ./scripts/bundle.sh release
 open dist/Sweep.app
+
+# Или упаковать готовый DMG
+./scripts/make-dmg.sh 0.1.0
 ```
 
 ### Full Disk Access
@@ -136,7 +139,7 @@ Sources/Sweep/
   Views/        — Dashboard, Category, Memory, переиспользуемые компоненты
   main.swift    — entry + режим --dryrun
 assets/         — icon.svg, AppIcon.icns, banner.svg, превью
-scripts/        — bundle.sh, make-icon.sh, release.sh
+scripts/        — bundle.sh, make-icon.sh, make-dmg.sh, release.sh
 ```
 
 Сделано на SwiftUI, Swift Observation и строгой конкурентности Swift 6. Без

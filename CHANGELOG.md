@@ -27,7 +27,9 @@ First public release.
 - Bilingual UI (English / Russian / System) with on-the-fly switching.
 - `--dryrun` mode: read-only scan plus safety and localization self-checks.
 - App icon generated from `assets/icon.svg`; `bundle.sh` / `make-icon.sh` /
-  `release.sh` build scripts.
+  `make-dmg.sh` / `release.sh` build scripts.
+- Distributable DMG (drag-to-Applications layout) and a tag-triggered GitHub
+  Actions workflow that builds and publishes the DMG to Releases automatically.
 
 [Unreleased]: https://github.com/Manser95/sweep/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Manser95/sweep/releases/tag/v0.1.0

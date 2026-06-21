@@ -83,11 +83,11 @@ string is translated in both languages).
 
 ## Install
 
-### Option A — Download a build
+### Option A — Download the DMG
 
-Grab the latest `Sweep.app` from the
-[**Releases**](https://github.com/Manser95/sweep/releases) page, move it to
-`/Applications`, and launch it.
+Download the latest `Sweep-x.y.z.dmg` from the
+[**Releases**](https://github.com/Manser95/sweep/releases) page, open it, and drag
+**Sweep** into **Applications**.
 
 > The app is distributed ad-hoc-signed (not yet notarized). On first launch,
 > right-click the app → **Open** to bypass Gatekeeper, or run
@@ -108,6 +108,9 @@ swift run Sweep
 # Or build a distributable .app into dist/
 ./scripts/bundle.sh release
 open dist/Sweep.app
+
+# Or package a ready-to-ship DMG
+./scripts/make-dmg.sh 0.1.0
 ```
 
 ### Full Disk Access
@@ -135,7 +138,7 @@ Sources/Sweep/
   Views/        — Dashboard, Category, Memory, reusable components
   main.swift    — entry + --dryrun mode
 assets/         — icon.svg, AppIcon.icns, banner.svg, preview
-scripts/        — bundle.sh, make-icon.sh, release.sh
+scripts/        — bundle.sh, make-icon.sh, make-dmg.sh, release.sh
 ```
 
 Built with SwiftUI, Swift Observation, and strict Swift 6 concurrency. No
