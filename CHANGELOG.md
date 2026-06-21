@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-06-21
+
+### Added
+- Signed & notarized release builds: `scripts/notarize.sh` (Developer ID +
+  hardened runtime + `notarytool` + stapling for both the app and the DMG),
+  optional signing in `release.yml`, and a setup guide in `SIGNING.md`.
+
 ## [0.1.0] — 2026-06-21
 
 First public release.
@@ -31,5 +38,6 @@ First public release.
 - Distributable DMG (drag-to-Applications layout) and a tag-triggered GitHub
   Actions workflow that builds and publishes the DMG to Releases automatically.
 
-[Unreleased]: https://github.com/Manser95/sweep/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Manser95/sweep/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Manser95/sweep/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/Manser95/sweep/releases/tag/v0.1.0
