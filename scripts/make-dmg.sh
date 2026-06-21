@@ -12,8 +12,14 @@ APP="$ROOT/dist/Sweep.app"
 DMG="$ROOT/dist/Sweep-${VERSION}.dmg"
 VOLNAME="Sweep"
 
-# Build the .app first.
-"$ROOT/scripts/bundle.sh" release
+# Build the .app first, unless the caller already prepared dist/Sweep.app
+# (e.g. notarize.sh, which staples the app before packaging — rebuilding here
+# would discard the stapled ticket).
+if [ "${SWEEP_DMG_NO_BUILD:-}" = "1" ] && [ -d "$APP" ]; then
+    echo "▸ Using existing $APP (skip build)"
+else
+    "$ROOT/scripts/bundle.sh" release
+fi
 
 # Stage the disk-image contents.
 STAGING="$(mktemp -d)"

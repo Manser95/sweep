@@ -89,9 +89,10 @@ Download the latest `Sweep-x.y.z.dmg` from the
 [**Releases**](https://github.com/Manser95/sweep/releases) page, open it, and drag
 **Sweep** into **Applications**.
 
-> The app is distributed ad-hoc-signed (not yet notarized). On first launch,
-> right-click the app → **Open** to bypass Gatekeeper, or run
-> `xattr -dr com.apple.quarantine /Applications/Sweep.app`.
+> Until a notarized build is published, the app is ad-hoc-signed. On first
+> launch, right-click the app → **Open** to bypass Gatekeeper, or run
+> `xattr -dr com.apple.quarantine /Applications/Sweep.app`. Maintainers: see
+> [SIGNING.md](SIGNING.md) to ship signed & notarized releases.
 
 ### Option B — Build from source
 
@@ -153,7 +154,7 @@ go through the localization table (both languages).
 
 ## Roadmap
 
-- Code signing & notarization for distribution
+- Signed & notarized release builds (pipeline ready — see [SIGNING.md](SIGNING.md))
 - Duplicate / large / old file finders, leftovers of uninstalled apps
 - Per-profile browser cache targets (Chrome / Safari / Firefox)
 - Scheduled automatic cleanups

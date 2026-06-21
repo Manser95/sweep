@@ -12,6 +12,9 @@ jobs:
   release:
     name: Build DMG & publish release
     runs-on: macos-15
+    env:
+      # True when signing/notarization secrets are configured (see SIGNING.md).
+      DO_SIGN: ${{ secrets.MACOS_CERT_P12 != '' && secrets.NOTARY_KEY_P8 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,10 +24,50 @@ jobs:
       - name: Safety & localization self-checks
         run: swift run Sweep --dryrun
 
-      - name: Build DMG
+      - name: Build (notarized if secrets are configured, ad-hoc otherwise)
+        env:
+          MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+          NOTARY_KEY_P8: ${{ secrets.NOTARY_KEY_P8 }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER: ${{ secrets.NOTARY_ISSUER }}
         run: |
+          set -euo pipefail
           VERSION="${GITHUB_REF_NAME#v}"
-          ./scripts/make-dmg.sh "$VERSION"
+
+          if [ "$DO_SIGN" != "true" ]; then
+            echo "No signing secrets configured — building an ad-hoc DMG."
+            ./scripts/make-dmg.sh "$VERSION"
+            exit 0
+          fi
+
+          echo "Signing secrets present — building a notarized DMG."
+
+          # Import the Developer ID certificate into a temporary keychain.
+          KEYCHAIN="$RUNNER_TEMP/build.keychain"
+          KEYCHAIN_PW="$(uuidgen)"
+          echo "$MACOS_CERT_P12" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KEYCHAIN" \
+            -P "$MACOS_CERT_PASSWORD" -T /usr/bin/codesign
+          security list-keychains -d user -s "$KEYCHAIN" login.keychain-db
+          security set-key-partition-list -S apple-tool:,apple: \
+            -s -k "$KEYCHAIN_PW" "$KEYCHAIN" >/dev/null
+          rm -f "$RUNNER_TEMP/cert.p12"
+
+          export SWEEP_SIGN_IDENTITY="$(security find-identity -v -p codesigning "$KEYCHAIN" \
+            | grep 'Developer ID Application' | head -1 | sed -E 's/^[^"]*"([^"]+)".*/\1/')"
+
+          # Notarization API key.
+          echo "$NOTARY_KEY_P8" | base64 --decode > "$RUNNER_TEMP/notary.p8"
+          export NOTARY_KEY="$RUNNER_TEMP/notary.p8"
+          export NOTARY_KEY_ID="$NOTARY_KEY_ID"
+          export NOTARY_ISSUER="$NOTARY_ISSUER"
+
+          ./scripts/notarize.sh "$VERSION"
+          rm -f "$RUNNER_TEMP/notary.p8"
 
       - name: Publish GitHub Release
         env:

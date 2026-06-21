@@ -46,10 +46,29 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 </plist>
 PLIST
 
-# Ad-hoc sign so it launches without "damaged" warnings on the build machine.
-echo "▸ Ad-hoc signing…"
-codesign --force --deep --sign - "$APP" >/dev/null 2>&1 || \
-    echo "  (codesign skipped — install Xcode CLT to sign)"
+# Code signing.
+#   • If a "Developer ID Application" identity is available (set
+#     SWEEP_SIGN_IDENTITY to pick one, or it is auto-detected), sign with the
+#     hardened runtime + secure timestamp so the app can be notarized.
+#   • Otherwise fall back to ad-hoc signing — fine for local use, but such a
+#     build cannot be notarized.
+SIGN_ID="${SWEEP_SIGN_IDENTITY:-}"
+if [ -z "$SIGN_ID" ]; then
+    SIGN_ID="$(security find-identity -v -p codesigning 2>/dev/null \
+        | grep 'Developer ID Application' | head -1 \
+        | sed -E 's/^[^"]*"([^"]+)".*/\1/')"
+fi
+
+if [ -n "$SIGN_ID" ]; then
+    echo "▸ Signing with Developer ID: $SIGN_ID"
+    codesign --force --options runtime --timestamp \
+        --sign "$SIGN_ID" "$APP"
+    codesign --verify --strict --verbose=1 "$APP" || true
+else
+    echo "▸ Ad-hoc signing (no Developer ID identity — not notarizable)…"
+    codesign --force --sign - "$APP" >/dev/null 2>&1 || \
+        echo "  (codesign skipped — install Xcode CLT to sign)"
+fi
 
 echo "✓ Done: $APP"
 echo ""
