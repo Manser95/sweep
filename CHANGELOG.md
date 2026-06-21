@@ -6,7 +6,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.1.1] — 2026-06-21
+## [0.1.2] — 2026-06-21
+
+### Fixed
+- Build scripts no longer abort under `set -euo pipefail` when no Developer ID
+  certificate is present — Developer ID auto-detection now falls back to ad-hoc
+  signing cleanly (fixes the CI bundle step).
+
+### Changed
+- Release re-cut from the latest `main` so the shipped app matches the docs.
 
 ### Added
 - Signed & notarized release builds: `scripts/notarize.sh` (Developer ID +
@@ -38,6 +46,7 @@ First public release.
 - Distributable DMG (drag-to-Applications layout) and a tag-triggered GitHub
   Actions workflow that builds and publishes the DMG to Releases automatically.
 
-[Unreleased]: https://github.com/Manser95/sweep/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/Manser95/sweep/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/Manser95/sweep/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/Manser95/sweep/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/Manser95/sweep/releases/tag/v0.1.0
