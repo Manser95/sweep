@@ -89,10 +89,9 @@ swift run Sweep --dryrun
 [**Releases**](https://github.com/Manser95/sweep/releases), откройте его и
 перетащите **Sweep** в **Applications**.
 
-> Пока не опубликована нотаризованная сборка, приложение подписано ad-hoc.
-> При первом запуске: правый клик по приложению → **Открыть**, чтобы обойти
-> Gatekeeper, либо `xattr -dr com.apple.quarantine /Applications/Sweep.app`.
-> Мейнтейнерам: см. [SIGNING.md](SIGNING.md) для подписи и нотаризации релизов.
+> Релизы начиная с **v0.1.1** подписаны Developer ID и **нотаризованы Apple** —
+> открываются без предупреждений Gatekeeper. Мейнтейнерам: настройка подписи в
+> [SIGNING.md](SIGNING.md).
 
 ### Вариант B — сборка из исходников
 
@@ -155,7 +154,6 @@ scripts/        — bundle.sh, make-icon.sh, make-dmg.sh, release.sh
 
 ## Планы
 
-- Подписанные и нотаризованные сборки (пайплайн готов — см. [SIGNING.md](SIGNING.md))
 - Поиск дубликатов / крупных / старых файлов, остатков удалённых приложений
 - Кэши браузеров по профилям (Chrome / Safari / Firefox)
 - Очистка по расписанию
