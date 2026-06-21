@@ -41,17 +41,22 @@ enum DryRun {
         }
 
         // Sanity-check the safety gate against paths that must always be rejected.
+        // URLs are built with an explicit `isDirectory: false` so the test does
+        // NOT depend on whether the directory happens to exist on this machine —
+        // otherwise the trailing-slash behaviour of `appendingPathComponent`
+        // would make the check pass on some machines and fail on others.
         print("\nSafety self-check (all must say BLOCKED):")
         let home = FileManager.default.homeDirectoryForCurrentUser
+        func rel(_ p: String) -> URL { home.appendingPathComponent(p, isDirectory: false) }
         let mustReject: [URL] = [
             home,
-            home.appendingPathComponent("Documents"),
-            home.appendingPathComponent("Desktop/important.txt"),
-            URL(fileURLWithPath: "/System/Library"),
-            URL(fileURLWithPath: "/usr/bin"),
-            home.appendingPathComponent("Library/Keychains"),
-            home.appendingPathComponent("Library/Developer/Xcode/Archives"),
-            home.appendingPathComponent("Library"),
+            rel("Documents"),
+            rel("Desktop/important.txt"),
+            URL(fileURLWithPath: "/System/Library", isDirectory: false),
+            URL(fileURLWithPath: "/usr/bin", isDirectory: false),
+            rel("Library/Keychains"),
+            rel("Library/Developer/Xcode/Archives"),
+            rel("Library"),
         ]
         for url in mustReject {
             let blocked = !SafetyGuard.isSafe(url, contentsOnly: false)

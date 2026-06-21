@@ -80,10 +80,16 @@ enum SafetyGuard {
     ///   and only its contents will be removed; we still validate the dir path.
     static func validate(_ url: URL, contentsOnly: Bool) throws {
         let target = url.standardizedFileURL
+        // All matching is done on the normalized string path. `URL.path` strips
+        // any trailing slash, so comparisons are immune to the directory/file
+        // (trailing-slash) ambiguity that `URL ==` is sensitive to — that bug
+        // could otherwise let a protected dir slip through on machines where the
+        // directory doesn't exist (`appendingPathComponent` decides the trailing
+        // slash from the filesystem).
         let path = target.path
 
         // 1. Never operate on the home dir or anything dangerously shallow.
-        if target == home.standardizedFileURL { throw Rejection.homeRootItself }
+        if path == home.standardizedFileURL.path { throw Rejection.homeRootItself }
         if target.pathComponents.count <= 3 { throw Rejection.tooShallow }
 
         // 2. Hard system denylist by absolute prefix.
@@ -93,27 +99,27 @@ enum SafetyGuard {
 
         // 3. Protected user locations.
         for p in protectedLocations {
-            if target == p || path.hasPrefix(p.path + "/") { throw Rejection.protectedLocation }
+            if path == p.path || path.hasPrefix(p.path + "/") { throw Rejection.protectedLocation }
         }
 
         // 4. Must be inside (or equal to, for contents-only) an allowed root.
         guard let matchedRoot = allowedRoots.first(where: { root in
-            target == root || path.hasPrefix(root.path + "/")
+            path == root.path || path.hasPrefix(root.path + "/")
         }) else {
             throw Rejection.outsideAllowedRoots
         }
 
         // 5. Refuse to delete an allowed root directory itself unless we are
         //    only clearing its contents.
-        if target == matchedRoot && !contentsOnly {
+        if path == matchedRoot.path && !contentsOnly {
             throw Rejection.isAllowedRootItself
         }
 
         // 6. Resolve symlinks and confirm the *real* path still lives under an
         //    allowed root — blocks symlink-escape attacks/footguns.
-        let resolved = target.resolvingSymlinksInPath().standardizedFileURL
+        let resolvedPath = target.resolvingSymlinksInPath().standardizedFileURL.path
         let stillInside = allowedRoots.contains { root in
-            resolved == root || resolved.path.hasPrefix(root.path + "/")
+            resolvedPath == root.path || resolvedPath.hasPrefix(root.path + "/")
         }
         if !stillInside { throw Rejection.escapesViaSymlink }
     }
